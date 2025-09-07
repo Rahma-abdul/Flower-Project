@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 
 
-function FlowerCard({ id, name }) {
+function FlowerCard({ name , image }) {
   return (
     <div className="flower-card">
-      <Link to={`/info/${id}`}>
-        {/* <img src={image} alt={name} className="flower-image" /> */}
+      <Link to={`/info/${encodeURIComponent(name)}`} >
+        <img src={image} alt={name} className="flower-image" />
         <h3>{name}</h3>
       </Link>
     </div>
