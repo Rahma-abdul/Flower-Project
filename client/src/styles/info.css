@@ -51,3 +51,75 @@
     padding: 5px ;
     border-radius: 8px;
 }
+
+
+.upload-box {
+    border: 3.4px dashed #b45886;
+    background: #fac8e1c6;
+    border-radius: 15px;
+    padding: 30px;
+    margin: 20px 50px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: cursive , 'Brush Script MT', 'Lucida Handwriting', sans-serif ;
+    font-weight: bold;
+    color: #9a4670;
+    position: relative;
+    transition: filter 0.3s ease;
+
+}
+
+.uploaded-image {
+    max-width: 100%;
+    max-height: 150px;
+    border-radius: 8px;
+}
+
+.uploaded-image.blurred {
+    filter: blur(3px);
+    max-height: 250px;
+}
+
+.upload-button {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background: #9a4670;
+    color: #fff;
+    cursor: pointer;
+}
+
+
+.submit-button {
+    margin-top: 15px;
+    padding: 10px 25px;
+    border-radius: 8px;
+    border: none;
+    background: #9a4670;
+    color: #fff;
+    cursor: pointer;
+    font-family: cursive , 'Brush Script MT', 'Lucida Handwriting', sans-serif ;
+    font-weight: bold;
+}
+
+.status {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #ffffff;
+    font-family: cursive , 'Brush Script MT', 'Lucida Handwriting', sans-serif ;
+    font-weight: bold;
+    font-size: 1.5rem;
+    background-color: #9a4670bf;
+    width: fit-content;
+    margin-inline: auto;
+    padding: 5px ;
+    border-radius: 8px;
+}
+
+
+
+
