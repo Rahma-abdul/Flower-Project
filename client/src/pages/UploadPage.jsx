@@ -38,7 +38,10 @@ function UploadPage() {
 
   const handleSubmit = () => {
     if (!image) {
-      setStatus("Please select a file first.");
+      setStatus("Please select a file first!!");
+      setTimeout(() => {
+        setStatus("");
+      }, 1000);
       return;
     }
     setStatus("Searching Web...");
@@ -78,7 +81,7 @@ function UploadPage() {
       )}
 
       {/* If status defined --> Remove button */}
-      {!status && (
+      {(!status || status == "Please select a file first!!") && (
       <>
       <p>Or</p>
       <label 
