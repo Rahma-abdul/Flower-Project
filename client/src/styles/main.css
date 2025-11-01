@@ -1,13 +1,18 @@
 .main-page {
     padding: 20px;
+    margin: auto;
     text-align: center;
+    font-family: cursive, 'Brush Script MT', 'Lucida Handwriting', sans-serif;
+    /* max-width: 600px; */
 }
 
 .flower-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));    gap: 50px;
+    grid-template-columns: repeat(auto-fill , 320px);    
+    gap: 50px;
     margin-top: 20px;
     width: min(1200px, 92vw);
+    justify-content: center;
 }
 
 .flower-card {
