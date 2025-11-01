@@ -100,3 +100,16 @@
     cursor: pointer;
     font-family: cursive , 'Brush Script MT', 'Lucida Handwriting', sans-serif ;
 }
+
+
+/* To make the search bar fit phones */
+@media (max-width: 500px) {
+    .search-filter-container {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    .search-bar, .filter-bar, .filter-button {
+        width: 80%;
+    }
+}
