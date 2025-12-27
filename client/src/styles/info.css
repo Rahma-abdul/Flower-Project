@@ -23,7 +23,10 @@
     background-color: #b45886aa;
     padding: 20px;
     border-radius: 12px;
-    width: min(300px, 90vw);
+    /* width: min(300px, 90vw); */
+    /* min-width: 300px;*/
+    max-width: 800px; 
+    width: fit-content;
     margin: 0 auto;
     font-family: cursive , 'Brush Script MT', 'Lucida Handwriting', sans-serif ;
 }

@@ -1,17 +1,17 @@
 import FlowerCard  from "../components/FlowerCard";
 import "../styles/main.css";
-import rose from "../assets/rose.jpg";
-import tulip from "../assets/tulip.jpg";
-import daisy from "../assets/daisy.jpg";
-import sunflower from "../assets/sunflower.jpg";
-import orchid from "../assets/orchid.jpg";  
-import lily from "../assets/lily.jpg";
-import carnation from "../assets/carnation.jpg";
-import chrysanthemum from "../assets/chrysanthemum.jpg";
-import marigold from "../assets/marigold.jpg";
-import peony from "../assets/peony.jpg";
-import hydrangea from "../assets/hydrangea.jpg";
-import lavender from "../assets/lavender.jpg";
+import rose from "/assets/rose.jpg";
+import tulip from "/assets/tulip.jpg";
+import daisy from "/assets/daisy.jpg";
+import sunflower from "/assets/sunflower.jpg";
+import orchid from "/assets/orchid.jpg";  
+import lily from "/assets/lily.jpg";
+import carnation from "/assets/carnation.jpg";
+import chrysanthemum from "/assets/chrysanthemum.jpg";
+import marigold from "/assets/marigold.jpg";
+import peony from "/assets/peony.jpg";
+import hydrangea from "/assets/hydrangea.jpg";
+import lavender from "/assets/lavender.jpg";
 
 
 function MainPage() {
