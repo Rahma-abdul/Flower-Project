@@ -2,11 +2,12 @@
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
-  font-family: cursive, 'Brush Script MT', 'Lucida Handwriting', sans-serif;
+  /* font-family: cursive, 'Brush Script MT', 'Lucida Handwriting', sans-serif; */
+  font-family: "Macondo", cursive;
 }
 
 .header-info{
-    font-size: 1.5em;
+    font-size: 1.9em;
     color: #ffffff;
     padding: 5px ;
     border-radius: 8px;
@@ -48,6 +49,7 @@
   margin-top: 15px;
   display: flex;
   gap: 10px;
+  
 }
 
 .input-container input {
@@ -56,6 +58,7 @@
   border-radius: 12px;
   border: 1px solid #dbade1;
   font-size: 1rem;
+  font-family: "Macondo", cursive;
 }
 
 .input-container button {

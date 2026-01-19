@@ -2,7 +2,8 @@
     font-size: 1.2em;
     /* margin-left: 30px; */
     color: #ffffff;
-    font-family: cursive , 'Brush Script MT', 'Lucida Handwriting', sans-serif ;
+    /* font-family: cursive , 'Brush Script MT', 'Lucida Handwriting', sans-serif ; */
+    font-family: "Macondo", cursive;
     font-weight: bold;
     margin-bottom: 20px;
     background-color: #b45886aa;
@@ -28,7 +29,8 @@
     max-width: 800px; 
     width: fit-content;
     margin: 0 auto;
-    font-family: cursive , 'Brush Script MT', 'Lucida Handwriting', sans-serif ;
+    /* font-family: cursive , 'Brush Script MT', 'Lucida Handwriting', sans-serif ; */
+    font-family: "Macondo", cursive;
 }
 
 .topic{
@@ -49,7 +51,7 @@
 }  
 
 .header-info{
-    font-size: 1.5em;
+    font-size: 1.9em;
     color: #ffffff;
     padding: 5px ;
     border-radius: 8px;
@@ -67,7 +69,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-family: cursive , 'Brush Script MT', 'Lucida Handwriting', sans-serif ;
+    /* font-family: cursive , 'Brush Script MT', 'Lucida Handwriting', sans-serif ; */
+    font-family: "Macondo", cursive;
     font-weight: bold;
     color: #9a4670;
     position: relative;
@@ -105,7 +108,8 @@
     background: #9a4670;
     color: #fff;
     cursor: pointer;
-    font-family: cursive , 'Brush Script MT', 'Lucida Handwriting', sans-serif ;
+    /* font-family: cursive , 'Brush Script MT', 'Lucida Handwriting', sans-serif ; */
+    font-family: "Macondo", cursive;
     font-weight: bold;
 }
 
@@ -113,7 +117,8 @@
     margin-top: 10px;
     font-weight: bold;
     color: #ffffff;
-    font-family: cursive , 'Brush Script MT', 'Lucida Handwriting', sans-serif ;
+    /* font-family: cursive , 'Brush Script MT', 'Lucida Handwriting', sans-serif ; */
+    font-family: "Macondo", cursive;
     font-weight: bold;
     font-size: 1.5rem;
     background-color: #9a4670bf;

@@ -1,5 +1,6 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  /* font-family: system-ui, Avenir, Helvetica, Arial, sans-serif; */
+  font-family: "Macondo", cursive;
   line-height: 1.5;
   font-weight: 400;
 
@@ -11,7 +12,9 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
 }
+
 
 a {
   font-weight: 500;
@@ -28,7 +31,9 @@ body {
   place-items: center; */
   min-width: 320px;
   min-height: 100vh;
-  background-image: url("../assets/background.jpg"); 
+  /* background-image: url("../assets/background.jpg");  */
+  /* background-image: linear-gradient(45deg,#eaa1df,#b69ecb, #af85d3); */
+  background-image: radial-gradient(circle,#eaa1df, #eaa1df,#b69ecb, #af85d3);
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -37,12 +42,12 @@ body {
 }
 
 h1 {
-  font-size: 3.2em;
+  font-size: 3.8em;
   line-height: 1.1;
   color: #ffffff;
   text-align: center;
-  font-family: cursive , 'Brush Script MT', 'Lucida Handwriting', sans-serif ;
-
+  /* font-family: cursive , 'Brush Script MT', 'Lucida Handwriting', sans-serif ; */
+  font-family: "Dancing Script", cursive;
 }
 
 .navbar {
@@ -52,7 +57,8 @@ h1 {
   margin-bottom: 20px;
   font-size: 1.2em;
   color: #ec87b9;
-  font-family: cursive , 'Brush Script MT', 'Lucida Handwriting', sans-serif ;
+  /* font-family: cursive , 'Brush Script MT', 'Lucida Handwriting', sans-serif ; */
+  font-family: "Macondo", cursive;
   font-weight: bold;
   
 }

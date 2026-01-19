@@ -2,7 +2,8 @@
     padding: 20px;
     margin: auto;
     text-align: center;
-    font-family: cursive, 'Brush Script MT', 'Lucida Handwriting', sans-serif;
+    /* font-family: cursive, 'Brush Script MT', 'Lucida Handwriting', sans-serif; */
+    font-family: "Macondo", cursive;
     /* max-width: 600px; */
 }
 
@@ -25,7 +26,8 @@
     cursor: pointer;
     width: 250px;
     text-align: center;
-    font-family: cursive , 'Brush Script MT', 'Lucida Handwriting', sans-serif ;
+    /* font-family: cursive , 'Brush Script MT', 'Lucida Handwriting', sans-serif ; */
+    font-family: "Macondo", cursive;
 
 
 }
@@ -62,12 +64,13 @@
     border: 1px solid #ccc;
     font-size: 1rem;
     color: #b45886;
+    font-family: "Macondo", cursive;
 }
 
 .search-bar::placeholder{
     color: #b45886;
-    font-family: cursive , 'Brush Script MT', 'Lucida Handwriting', sans-serif ;
-
+    /* font-family: cursive , 'Brush Script MT', 'Lucida Handwriting', sans-serif ; */
+    font-family: "Macondo", cursive;
 }
 
 .search-bar:focus {
@@ -82,7 +85,8 @@
     font-size: 1rem;
     background-color: #fff;
     color: #b45886;
-    font-family: cursive , 'Brush Script MT', 'Lucida Handwriting', sans-serif ;
+    /* font-family: cursive , 'Brush Script MT', 'Lucida Handwriting', sans-serif ; */
+    font-family: "Macondo", cursive;
 }
 
 .filter-bar:focus{
@@ -98,7 +102,8 @@
     color: #fff;
     font-size: 1rem;
     cursor: pointer;
-    font-family: cursive , 'Brush Script MT', 'Lucida Handwriting', sans-serif ;
+    /* font-family: cursive , 'Brush Script MT', 'Lucida Handwriting', sans-serif ; */
+    font-family: "Macondo", cursive;
 }
 
 

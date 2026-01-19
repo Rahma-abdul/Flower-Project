@@ -2,7 +2,8 @@
     margin: 20px auto;
     /* justify-self: center; */
     max-width: 600px;
-    font-family: cursive, 'Brush Script MT', 'Lucida Handwriting', sans-serif;
+    /* font-family: cursive, 'Brush Script MT', 'Lucida Handwriting', sans-serif; */
+    font-family: "Macondo", cursive;
 }
 .quiz-container{
     background-color: #f1e9ed;
@@ -42,6 +43,7 @@
     height: 35px;
     font-size: 1.06em;
     border: #792750b3 1.6px solid;
+    font-family: "Macondo", cursive;
 }
 
 .options{
