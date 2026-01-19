@@ -6,7 +6,7 @@
     font-family: "Macondo", cursive;
 }
 .quiz-container{
-    background-color: #f1e9ed;
+    background-color: #fff0f55e;
     padding: 20px;
     border-radius: 12px;
     display: flex;
@@ -24,7 +24,7 @@
 }
 
 .item{
-    background-color: #eaaaca;
+    background-color: #b4588676;
     padding: 8px;
     border-radius: 8px;
     display: flex;
@@ -33,8 +33,9 @@
 }
 
 .item label{
-    font-size: 1.06em;
-    color: #792750;
+    font-size: 1.1em;
+    color: #ffffff;
+    font-weight: bold;
 }
 
 .item input{
@@ -42,10 +43,14 @@
     border-radius: 6px;
     height: 35px;
     font-size: 1.06em;
-    border: #792750b3 1.6px solid;
+    border: #792750b3 1px solid;
     font-family: "Macondo", cursive;
 }
 
+.item input:focus{
+    outline: none;
+    border: 1.5px solid #792750b3;
+}
 .options{
     display:grid;
     grid-template-columns: repeat(2, auto);
@@ -56,6 +61,9 @@
     display: flex;
     align-items: center;
     color: #792750;
+    border-radius: 8px;
+    margin: 5px;
+    background-color: #a5406f34;
 }
 
 .option-item input:hover{
@@ -64,7 +72,7 @@
 
 
 .submit {
-    background-color: #792750;
+    background-color: #b45886d7;
     cursor: pointer;
     color: white;
     transition: ease-in-out 0.3s;
@@ -72,6 +80,7 @@
 }
 
 .submit:hover{
-    background-color: #a5406f;
-    transform: scale(1.02);
+    background-color: #7d3559;
+    /* transform: scale(1.02); */
+    transition: ease-in-out 0.3s ;
 }

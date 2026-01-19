@@ -66,8 +66,8 @@ function UploadPage() {
 
   return (
     <div className="info-page">  
-      <h1 className="header-info" >Upload Flower</h1>
-      <div className="header">Upload a flower and we'll identify it for you :) </div>
+      {/* <h1 className="header-info" >Upload Flower</h1> */}
+      <h1 className="header-info">Upload a flower and we'll identify it for you :) </h1>
       <div className= 'upload-box'
         onDrop={handleDragDrop}
         onDragOver={handleDragOver}

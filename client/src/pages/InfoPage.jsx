@@ -43,7 +43,7 @@ function InfoPage() {
     if (loading) 
         return( 
             <div className="info-page">
-            <div className="header">Loading details for {decodeURIComponent(name)} flower...</div>   
+            <h1 className="header-info">Loading details for {decodeURIComponent(name)} flower...</h1>   
             </div>
         );
     if (error) 
@@ -55,8 +55,8 @@ function InfoPage() {
 
     return (
         <div className="info-page">
-        <h1 className="header-info" >Flower Information</h1>
-        <div className="header">Showing details for {decodeURIComponent(name)} flower:</div>
+        {/* <h1 className="header-info" >Flower Information</h1> */}
+        <h1 className="header-info">Showing details for {decodeURIComponent(name)} flower:</h1>
         <div className="flower-details">
             {flowerDetails ? (
                 <div>

@@ -98,12 +98,18 @@
     padding: 0.6rem 1rem;
     border-radius: 8px;
     border: none;
-    background-color: #b45886;
+    background-color: #b45886d7;
     color: #fff;
     font-size: 1rem;
     cursor: pointer;
     /* font-family: cursive , 'Brush Script MT', 'Lucida Handwriting', sans-serif ; */
     font-family: "Macondo", cursive;
+    transition: ease-in-out 0.3s;
+}
+
+.filter-button:hover{
+    background-color: #7d3559;
+    transition: ease-in-out 0.3s ;
 }
 
 

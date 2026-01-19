@@ -126,7 +126,7 @@ button:focus-visible {
 /* Responsive adjustments for small screens */
 @media (max-width: 768px) {
   h1 {
-    font-size: 2em; /* smaller than default 3.2em */
+    font-size: 3.2em; /* smaller than default 3.8em */
   }
 
   .logo-icon {
@@ -134,7 +134,7 @@ button:focus-visible {
   }
 
   .navbar {
-    font-size: 1em; /* optional: reduce nav font size */
+    font-size: 1.3em; /* optional: reduce nav font size */
     gap: 10px; /* optional: reduce spacing */
   }
 }
@@ -142,7 +142,7 @@ button:focus-visible {
 /* For phones */
 @media (max-width: 480px) {
   h1 {
-    font-size: 1.6em;
+    font-size: 1.8em;
   }
 
   .logo-icon {
@@ -150,7 +150,7 @@ button:focus-visible {
   }
 
   .navbar {
-    font-size: 0.9em;
+    font-size: 1em;
     gap: 5px;
     flex-wrap: wrap; /* wrap navbar links if needed */
   }

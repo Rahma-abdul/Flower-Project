@@ -59,8 +59,9 @@
 
 
 .upload-box {
-    border: 3.4px dashed #b45886;
-    background: #fac8e1c6;
+    border: 2.6px dashed #b4588692;
+    /* background: #fac8e179; */
+    background-color: #fff0f55e;
     border-radius: 15px;
     padding: 30px;
     margin: 20px 50px;
@@ -94,7 +95,7 @@
     margin-top: 10px;
     padding: 10px 20px;
     border-radius: 8px;
-    background: #9a4670;
+    background: #b45886d7;
     color: #fff;
     cursor: pointer;
 }
@@ -105,12 +106,16 @@
     padding: 10px 25px;
     border-radius: 8px;
     border: none;
-    background: #9a4670;
+    background: #b45886d7;
     color: #fff;
     cursor: pointer;
     /* font-family: cursive , 'Brush Script MT', 'Lucida Handwriting', sans-serif ; */
     font-family: "Macondo", cursive;
     font-weight: bold;
+}
+
+.submit-button:hover, .upload-button:hover{
+    background: #7d3559;
 }
 
 .status {
@@ -121,7 +126,7 @@
     font-family: "Macondo", cursive;
     font-weight: bold;
     font-size: 1.5rem;
-    background-color: #9a4670bf;
+    background-color: #b45886d7;
     width: fit-content;
     margin-inline: auto;
     padding: 5px ;
