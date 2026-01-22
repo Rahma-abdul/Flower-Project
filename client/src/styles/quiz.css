@@ -86,3 +86,10 @@
     /* transform: scale(1.02); */
     transition: ease-in-out 0.3s ;
 }
+
+.status{
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+    width: 300px;
+}

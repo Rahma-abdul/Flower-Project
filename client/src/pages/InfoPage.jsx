@@ -11,6 +11,7 @@ function InfoPage() {
 
     useEffect(() => {
         async function fetchFlowerDetails() {
+            
             try {
                 // Calling API --> Sends HTTP request
                 const response = await fetch(`/api/info-api?name=${encodeURIComponent(name)}`);
