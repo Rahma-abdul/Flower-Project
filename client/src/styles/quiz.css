@@ -4,6 +4,7 @@
     max-width: 600px;
     /* font-family: cursive, 'Brush Script MT', 'Lucida Handwriting', sans-serif; */
     font-family: "Macondo", cursive;
+    
 }
 .quiz-container{
     background-color: #fff0f55e;
@@ -14,7 +15,8 @@
     overflow-y: auto;
     gap: 15px;
     /* max-width: 600px; */
-    margin: 0 20px;
+    margin: 0 50px;
+    align-items: center;
 }
 
 .question{
