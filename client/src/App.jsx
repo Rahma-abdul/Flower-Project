@@ -32,3 +32,6 @@ function App() {
 }
 
 export default App;
+
+// To run locally:
+// outside client and "vercel dev" (might need to verify or login)

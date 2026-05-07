@@ -2,6 +2,9 @@
 
 // Import gemini
 import { GoogleGenerativeAI } from '@google/generative-ai';
+// Import supabase 
+import { supabase } from './supabaseClient.js';
+
 
 export default async function handler(req, res) {
     // Step 1: Defining the serverless function to handle requests
@@ -40,7 +43,8 @@ export default async function handler(req, res) {
         // A. Pick Model
         const gemini = new GoogleGenerativeAI(geminiKey);
         const model = gemini.getGenerativeModel({
-        model: "gemini-2.5-flash"
+        // model: "gemini-2.5-flash"
+        model: "gemini-2.5-flash-lite"
         });
 
         // // B. Create prompt
@@ -81,8 +85,17 @@ export default async function handler(req, res) {
             return res.status(404).json({ error: "Flower Not Found" });
         }
 
-        // Step 5: Return the JSON response
-        res.status(200).json(flowers);
+        // Step 5: Fetch the image URL from Supabase based on the flower name
+        const { data, error } = await supabase
+        .from('Flowers')
+        .select('image')
+        .eq('name', name)
+        .single();
+
+        // Step 6: Return the JSON response
+        // res.status(200).json(flowers);
+        res.status(200).json({ ...flowers, Image: data?.image || null });
+
 
     } catch (error) {
         // We also need to be extra sure in case all the api fails so we wrap everything in try catch

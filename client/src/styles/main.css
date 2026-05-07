@@ -78,7 +78,7 @@
 .search-bar:focus {
     outline-color:#b45886;
 }
-
+/* 
 .filter-bar {
     padding: 0.6rem;
     border-radius: 8px;
@@ -87,16 +87,15 @@
     font-size: 1rem;
     background-color: #fff;
     color: #b45886;
-    /* font-family: cursive , 'Brush Script MT', 'Lucida Handwriting', sans-serif ; */
     font-family: "Macondo", cursive;
 }
 
 .filter-bar:focus{
     outline-color:#b45886;
-}
+} */
 
 
-.filter-button{
+.search-button{
     padding: 0.6rem 1rem;
     border-radius: 8px;
     border: none;
@@ -109,7 +108,7 @@
     transition: ease-in-out 0.3s;
 }
 
-.filter-button:hover{
+.search-button:hover{
     background-color: #7d3559;
     transition: ease-in-out 0.3s ;
 }
@@ -122,7 +121,7 @@
         gap: 0.8rem;
     }
 
-    .search-bar, .filter-bar, .filter-button {
+    .search-bar, .search-button {
         width: 80%;
     }
 }

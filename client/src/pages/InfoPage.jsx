@@ -30,9 +30,11 @@ function InfoPage() {
                 // Data = {Image: '/assets/rose.jpg', Colors: 'Red', Origin: 'Asia, Europe, North America'....} --> Objects
                
                 setflowerDetails(data);
-            }
+
+                }
             catch(error){
                 setError(error.message);
+                console.error("Error fetching advice:", error.message);
             }
             finally{
                 setLoading(false);
@@ -61,7 +63,7 @@ function InfoPage() {
         <div className="flower-details">
             {flowerDetails ? (
                 <div>
-                    {/* <img src={flowerDetails.Image} alt={name} className="flower-detail-image" /> */}
+                    <img src={flowerDetails.Image} alt={name} className="flower-detail-image" />
                     <p><strong className= "topic">Colors:</strong> {flowerDetails.Colors}</p>
                     <p><strong className= "topic">Origin:</strong> {flowerDetails.Origin}</p>
                     <p><strong className= "topic">Meaning:</strong> {flowerDetails.Meaning}</p>
