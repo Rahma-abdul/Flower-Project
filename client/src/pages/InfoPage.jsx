@@ -63,11 +63,16 @@ function InfoPage() {
         <div className="flower-details">
             {flowerDetails ? (
                 <div>
-                    <img src={flowerDetails.Image} alt={name} className="flower-detail-image" />
+                    {flowerDetails.Image && (
+                        <img src={flowerDetails.Image} alt={name} className="flower-detail-image" />
+                    )}
+                    <p><strong className= "topic">Description:</strong> {flowerDetails.Description}</p>
                     <p><strong className= "topic">Colors:</strong> {flowerDetails.Colors}</p>
                     <p><strong className= "topic">Origin:</strong> {flowerDetails.Origin}</p>
                     <p><strong className= "topic">Meaning:</strong> {flowerDetails.Meaning}</p>
                     <p><strong className= "topic">Climate:</strong> {flowerDetails.Climate}</p>
+                    <p><strong className= "topic">Other Names:</strong> {flowerDetails.OtherNames}</p>
+                    <p><strong className= "topic">Fun Fact:</strong> {flowerDetails.FunFact}</p>
                 </div>
             ) : (
                 <p>No details available for this flower.</p>

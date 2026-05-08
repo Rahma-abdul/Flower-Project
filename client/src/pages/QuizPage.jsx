@@ -14,7 +14,7 @@ function QuizPage() {
     {id: "Fav Fruit",  question: "What's your favorite fruit?"},
     {id: "Dream Vacation",  question: "What is your dream vacation destination?"},
     {id: "Fav Music Artist",  question: "What's your favorite music artist?"},
-    {id: "Hairstyle",  question: "Do you like short or tall hairstyles?"},
+    {id: "Hairstyle",  question: "Do you like short or long hairstyles?"},
     {id: "Fav Season",  question: "What is your favorite season of the year?"},
     {id: "Fav Movie Genre",  question: "What type of movies do you enjoy the most?"},
     {id: "Morning Person/ Night Owl",  question: "Morning person or night owl?"},

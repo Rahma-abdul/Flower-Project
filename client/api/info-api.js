@@ -49,15 +49,18 @@ export default async function handler(req, res) {
 
         // // B. Create prompt
         const prompt = `Provide the following information about the flower named "${name}". 
-                        Include these exact details {all possible colors, origins , meanings that this flower symbolizes, and climate it's grown in}. 
+                        Include these exact details {a detailed description of the flower, all possible colors, origins , meanings that this flower symbolizes and associations, climate it's grown in, other common names of this flower and a fun fact OR explanation of how the flower got its name }. 
                         Respond in ONLY VALID JSON format. No markdown. No explanation. No extra text. as the following 
-                        { Colors: "...",
+                        { 
+                        Description: "...",
+                        Colors: "...",
                         Origin: "...",
                         Meaning: "...",
-                        Climate: "..."}`;
-                
-                
-        
+                        Climate: "..."}
+                        OtherNames: "...",
+                        FunFact: "..."
+                        }`;
+                   
             
         // C. Call the model
         const result = await model.generateContent(prompt);
@@ -85,19 +88,39 @@ export default async function handler(req, res) {
             return res.status(404).json({ error: "Flower Not Found" });
         }
 
-        // Step 5: Fetch the image URL from Supabase based on the flower name
+        let imageUrl = null;
+
+        // Step 5: Fetch the image URL from Supabase if found
         const { data, error } = await supabase
         .from('Flowers')
         .select('image')
         .ilike('name', `%${decodeURIComponent(name)}%`)        
         .single();
 
-        if (error) {
-            console.error("Supabase image fetch error:", error);
+        
+        if (data?.image) {
+            imageUrl = data.image;
         }
+        // else{
+        //     // if not in db 
+        //     // search wikipedia 
+        //     try{
+                
+        //         const wikiResponse = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(decodeURIComponent(name))}flower`);
+        //         console.log("Wikipedia API response status:", wikiResponse.status);
+        //         console.log("URL searching for is: ", `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(decodeURIComponent(name))}flower`);
+        //         if (wikiResponse.ok) {
+        //             const wikiData = await wikiResponse.json();
+        //             imageUrl = wikiData?.thumbnail?.source || null;
+        //         }
+        //     }
+        //     catch(error){
+        //         console.error("Error fetching image from Wikipedia:", error);
+        //     }
+        // }
         // Step 6: Return the JSON response
         // res.status(200).json(flowers);
-        res.status(200).json({ ...flowers, Image: data?.image || null });
+        res.status(200).json({ ...flowers, Image: imageUrl });
 
 
     } catch (error) {

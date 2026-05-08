@@ -68,6 +68,8 @@ function UploadPage() {
     <div className="info-page">  
       {/* <h1 className="header-info" >Upload Flower</h1> */}
       <h1 className="header-info">Upload a flower and we'll identify it for you :) </h1>
+      <div className="ai_model">This is a custom-trained AI model with accuracy of 80% approximately.</div>
+      <div className="ai_model ">(Results should be verified for critical applications.)</div>
       <div className= 'upload-box'
         onDrop={handleDragDrop}
         onDragOver={handleDragOver}

@@ -64,7 +64,7 @@
     background-color: #fff0f55e;
     border-radius: 15px;
     padding: 30px;
-    margin: 20px 50px;
+    margin: 10px 50px;
     height: 250px;
     display: flex;
     flex-direction: column;
@@ -135,4 +135,10 @@
 
 
 
-
+.ai_model{
+    font-size: 0.9em;
+    color: #ffffff;
+    /* margin-bottom: 5px; */
+    text-align: center;
+    margin-top: 0%;
+}
