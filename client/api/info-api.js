@@ -89,9 +89,12 @@ export default async function handler(req, res) {
         const { data, error } = await supabase
         .from('Flowers')
         .select('image')
-        .eq('name', name)
+        .ilike('name', `%${decodeURIComponent(name)}%`)        
         .single();
 
+        if (error) {
+            console.error("Supabase image fetch error:", error);
+        }
         // Step 6: Return the JSON response
         // res.status(200).json(flowers);
         res.status(200).json({ ...flowers, Image: data?.image || null });

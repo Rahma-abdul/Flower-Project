@@ -16,7 +16,8 @@ try{
         const { data: search_data, error: search_error } = await supabase
         .from('Flowers')
         .select('*')
-        .ilike('name', `${normalizedSearch}%`); 
+        // .ilike('name', `${normalizedSearch}%`); 
+        .ilike('name', `%${normalizedSearch}%`)
         // Case-insensitive search on the 'name' column
 
        if (search_error) {

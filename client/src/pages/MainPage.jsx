@@ -80,6 +80,14 @@ function MainPage() {
     }
   };
 
+  
+  // If they click enter
+  const handleEnter = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  }
+
   const formatFlowerName = (name) => {
   if (!name) return "";
 
@@ -102,6 +110,7 @@ if (loading) {
           className="search-bar"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          onKeyDown={handleEnter}          
         />
         <button className='search-button' onClick={handleSearch}>
           Search
@@ -124,6 +133,7 @@ if (loading) {
           className="search-bar"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          onKeyDown={handleEnter}
         />
         {/* <select className="filter-bar">
           <option value="" disabled hidden>Filter by...</option>

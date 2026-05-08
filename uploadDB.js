@@ -3,7 +3,8 @@ import fs from 'fs';
 import path from 'path';
 
 const SUPABASE_URL= ""
-const SUPABASE_ANON_KEY=""
+const SUPABASE_ANON_KEY= ""
+
 
 const supabase = createClient(
   SUPABASE_URL,SUPABASE_ANON_KEY);
@@ -17,16 +18,21 @@ const uploadAndInsert = async () => {
     const filePath = path.join(datasetPath, file);
 
     // skip non-images
-    if (!file.match(/\.(jpg|jpeg|png)$/)) continue;
+    // if (!file.match(/\.(jpg|jpeg|png)$/)) continue;
+    if (!file.match(/\.(jpg|jpeg|png)$/i)) continue;
 
     const raw_flowerName = file.split('.')[0]; // "rose.jpg" → "rose"
 
-    const flowerName =
-        raw_flowerName.charAt(0).toUpperCase() +
-        raw_flowerName.slice(1);
-        // "rose.jpg" → "rose" → "Rose"
 
-    console.log(`Uploading ${flowerName}...`);
+    const flowerName = raw_flowerName
+        // "rose.jpg" → "rose" → "Rose"
+        // Remove underscores and capitalize each word
+        .split('_')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(' '); // "red_rose.jpg" → "Red Rose"
+
+
+    // console.log(`Uploading ${flowerName}...`);
 
     // Upload to storage
     const { error: uploadError } = await supabase.storage
@@ -56,9 +62,10 @@ const uploadAndInsert = async () => {
 
     if (dbError) {
       console.error('DB error:', dbError.message);
-    } else {
-      console.log(`Inserted ${flowerName}`);
-    }
+    } 
+    // else {
+      // console.log(`Inserted ${flowerName}`);
+    // }
   }
 };
 
