@@ -108,8 +108,11 @@ export default async function handler(req, res) {
         if (data?.image) {
             imageUrl = data.image;
         }
+
+        
+
         // Step 6: Save the info_json to the database for future caching
-        const { data2, error2 } =  await supabase
+        const { data: data2, error: error2 } =  await supabase
         .from("Flowers")
         .update({
             info_json: flowers
@@ -120,6 +123,22 @@ export default async function handler(req, res) {
                 
         // console.log("Updated rows:", data2);
         // console.log("Error:", error2);
+
+        // Step 7: If flower name not in DB --> make new row with name and info
+        // Keda keda Image will be null since it's new flower 
+        if (!data2 || data2.length === 0) {
+        const { error: insertError } = await supabase
+            .from("Flowers")
+            .insert({
+            name,
+            image: imageUrl,
+            info_json: flowers
+            });
+
+        if (insertError) {
+            console.error("Insert error:", insertError);
+        }
+        }
 
         // else{
         //     // if not in db 
