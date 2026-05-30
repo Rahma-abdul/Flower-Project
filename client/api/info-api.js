@@ -14,24 +14,31 @@ export default async function handler(req, res) {
         // Step 2: Extracts the query parameter (Name) from the request URL
         const { name } = req.query;
 
-        // Dummy API data 
-        // const flowers = {
-        //     Rose: {
-        //     // Image: "/assets/rose.jpg",
-        //     Colors: "Red",
-        //     Origin: "Asia, Europe, North America",
-        //     Meaning: "Love and Passion",
-        //     Climate: "Temperate"
-        //     },
-        //     Tulip: {
-        //     // Image: "/assets/tulip.jpg",
-        //     Colors: "Red, Yellow, Pink, White, Purple",
-        //     Origin: "Central Asia and Turkey",
-        //     Meaning: "Perfect Love",
-        //     Climate: "Temperate"
-        //     }
-        // };
+        if (!name) {
+            return res.status(400).json({ error: "Missing 'name' query parameter" });
+        }
 
+        // Step 3: CHECK DATABASE FIRST (CACHE)
+        const { data: existing, error: dbError } = await supabase
+        .from("Flowers")
+        .select("info_json, image")
+        .eq("name", name)
+        .maybeSingle();
+
+        if (dbError) {
+        console.error("DB error:", dbError);
+        }
+
+        // Step 3.1: IF FOUND → RETURN IMMEDIATELY
+        if (existing?.info_json) {
+        return res.status(200).json({
+            ...existing.info_json,
+            Image: existing.image
+        });
+        }
+
+        // Step 3.2: OTHERWISE → CALL GEMINI
+        
         // Check if gemini key exists
         const geminiKey = process.env.GEMINI_API_KEY;
         if (!geminiKey) {
@@ -39,7 +46,7 @@ export default async function handler(req, res) {
         }
 
         
-        // Step 3: Integrating Gemini API
+        // Integrating Gemini API
         // A. Pick Model
         const gemini = new GoogleGenerativeAI(geminiKey);
         const model = gemini.getGenerativeModel({
@@ -101,6 +108,19 @@ export default async function handler(req, res) {
         if (data?.image) {
             imageUrl = data.image;
         }
+        // Step 6: Save the info_json to the database for future caching
+        const { data2, error2 } =  await supabase
+        .from("Flowers")
+        .update({
+            info_json: flowers
+        })
+        .ilike('name', `%${name}%`)
+        .select();
+
+                
+        // console.log("Updated rows:", data2);
+        // console.log("Error:", error2);
+
         // else{
         //     // if not in db 
         //     // search wikipedia 
