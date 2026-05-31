@@ -4,6 +4,7 @@ import formidable from "formidable";
 import sharp from "sharp";
 import path from "path";
 
+
 export const config = {
     api: {
         bodyParser: false, // Disable Next.js's default body parser
@@ -16,13 +17,13 @@ let session = null;
 // Load the ONNX model when the server starts
 async function loadModel() {
   if (!session) {
-    const modelPath = path.resolve("./api/flower_model_clean.onnx");
-    // const modelPath = path.join(
-    //    process.cwd(), 
-    //    "public",
-    //   "upload-model",
-    //   "flower_model_clean.onnx"
-    // );
+    
+    const modelPath = path.join(
+       process.cwd(), 
+       "public",
+      "models",
+      "flower_model_clean.onnx"
+    );
     session = await ort.InferenceSession.create(modelPath);
     console.log("ONNX model loaded successfully!");
     
@@ -35,7 +36,12 @@ console.log("Current working directory:", process.cwd());
 // const idx_to_flower = JSON.parse(fs.readFileSync("./upload-model/idx_to_class.json", "utf-8"));
 const idx_to_flower = JSON.parse(
     fs.readFileSync(
-        path.resolve("./api/idx_to_class.json") , 
+        path.join(
+            process.cwd(), 
+            "public",
+            "models",
+            "idx_to_class.json"
+        ),
         "utf-8"
     )
 );
