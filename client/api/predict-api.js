@@ -23,11 +23,12 @@ async function loadModel() {
     );
     session = await ort.InferenceSession.create(modelPath);
     console.log("ONNX model loaded successfully!");
-    console.log(process.cwd());
+    
   } 
   return session;
 }
 
+console.log(process.cwd());
 // idx_to_flower mapping
 // const idx_to_flower = JSON.parse(fs.readFileSync("./upload-model/idx_to_class.json", "utf-8"));
 const idx_to_flower = JSON.parse(
