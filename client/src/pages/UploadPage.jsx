@@ -14,7 +14,10 @@ let cachedIdxToFlower = null;
 async function loadModel() {
   if (!cachedSession) {
     const modelUrl = "https://flower-project-kappa.vercel.app/models/flower_model_clean.onnx";
-    cachedSession = await ort.InferenceSession.create(modelUrl , {
+    const response = await fetch(modelUrl, { cache: "no-store" });
+    const modelBuffer = await response.arrayBuffer();
+
+    cachedSession = await ort.InferenceSession.create(modelBuffer, {
       executionProviders: ['wasm'], // Use WebAssembly backend for better performance
     });
     console.log("ONNX model loaded successfully!");
@@ -168,14 +171,22 @@ function UploadPage() {
       const prediction = Array.from(outputData).indexOf(Math.max(...outputData));
       const flower = idx_to_flower[prediction];
 
+      // Make Name Pretty
+      // Ex: bee_balm --> Bee Balm
+      const flower2 = flower.trim();
+      const prettyFlower = flower2.split("_").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
+
       if (!flower) {
         throw new Error("Flower Not Found :(\n Please Try again!!");
       }
 
+      setTimeout(() => {
       setStatus("Redirecting...");
+      }, 1500);
+
 
       setTimeout(() => {
-        navigate(`/info/${encodeURIComponent(flower)}`);
+        navigate(`/info/${encodeURIComponent(prettyFlower)}`);
       }, 1500);
     }
 
@@ -249,7 +260,6 @@ export default UploadPage;
 
 
 // To do :
-// Make text pretty again in info page 
 // Add confidence but make sure it's not in db
 // add notebook to repo 
 // readme and cv description 
