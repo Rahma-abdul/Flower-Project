@@ -1,7 +1,59 @@
 import "../styles/info.css";
-import { useState } from "react";
+import { useState  , useRef , useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import * as ort from "onnxruntime-web";
 
+// Pin to stable version
+const ORT_VERSION = "1.26.0"; 
+
+ort.env.wasm.wasmPaths =  `https://cdn.jsdelivr.net/npm/onnxruntime-web@${ORT_VERSION}/dist/`;
+
+let cachedSession = null;
+let cachedIdxToFlower = null;
+
+async function loadModel() {
+  if (!cachedSession) {
+    const modelUrl = "https://flower-project-kappa.vercel.app/models/flower_model_clean.onnx";
+    cachedSession = await ort.InferenceSession.create(modelUrl , {
+      executionProviders: ['wasm'], // Use WebAssembly backend for better performance
+    });
+    console.log("ONNX model loaded successfully!");
+  }
+  return cachedSession;
+}
+
+async function loadIdxToFlower() {
+  if (!cachedIdxToFlower) {
+    const idxToFlowerUrl = "https://flower-project-kappa.vercel.app/models/idx_to_class.json";
+    cachedIdxToFlower = await fetch(idxToFlowerUrl).then(r => r.json());
+    console.log("idx_to_flower mapping loaded successfully!");
+  }
+  return cachedIdxToFlower;
+}
+
+async function preprocessImage(img) {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = 224;
+    canvas.height = 224;
+    ctx.drawImage(img, 0, 0, 224, 224);
+
+    const imageData = ctx.getImageData(0, 0, 224, 224);
+    const data = imageData.data;
+
+    const floatArray = new Float32Array(3 * 224 * 224);
+    const mean = [0.485, 0.456, 0.406];
+    const std = [0.229, 0.224, 0.225];
+
+    for (let i = 0; i < 224 * 224; i++) {
+    for (let c = 0; c < 3; c++) {
+      const pixel = data[i * 4 + c] / 255.0;
+      floatArray[c * 224 * 224 + i] = (pixel - mean[c]) / std[c];
+    }
+  }
+
+    return new ort.Tensor('float32', floatArray, [1, 3, 224, 224]);
+}
 
 function UploadPage() {
 
@@ -10,6 +62,13 @@ function UploadPage() {
   // const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
+  const imgRef = useRef(null);
+
+  useEffect(() => {
+    loadModel();
+    loadIdxToFlower();
+  }, []);
+
 
   // For uploading files
   const handleFileChange = (event) => {
@@ -65,36 +124,58 @@ function UploadPage() {
     // }, 5000);
 
     try {
-      setStatus("Searching Web...");
 
-      const formData = new FormData();
-      formData.append("image", selectedFile);
+      setStatus("Loading Image...");
+
+      // const formData = new FormData();
+      // formData.append("image", selectedFile);
+      const [session, idx_to_flower] = await Promise.all([loadModel(), loadIdxToFlower()]);
 
 
-      setTimeout(() => {
       setStatus("Consulting AI Model..."); 
-    }, 800);
-
       
-      const response = await fetch("/api/predict-api", {
-        method: "POST",
-        body: formData
-      });
-      if (!response.ok) {
-        throw new Error("Prediction Failed :(\n Please Try again!!");
+      // const response = await fetch("/api/predict-api", {
+      //   method: "POST",
+      //   body: formData
+      // });
+      // if (!response.ok) {
+      //   throw new Error("Prediction Failed :(\n Please Try again!!");
+      // }
+
+
+      // const data = await response.json();
+
+      // if (!data?.flower) {
+      //   throw new Error("Flower Not Found :(\n Please Try again!!");
+      // }
+
+      // Wait for the <img> element to be fully painted before reading pixels
+      const imageElement = imgRef.current;
+      if (!imageElement.complete) {
+        await new Promise((resolve) => {
+          imageElement.onload = resolve;
+        });
       }
 
+      const tensor = await preprocessImage(imageElement);
+      const inputName = session.inputNames[0];
+      const outputs = await session.run({ [inputName]: tensor });
+      
+      const outputKey = session.outputNames[0];
+      const outputTensor = outputs[outputKey];
+      const outputData = outputTensor.data;
+      
+      const prediction = Array.from(outputData).indexOf(Math.max(...outputData));
+      const flower = idx_to_flower[prediction];
 
-      const data = await response.json();
-
-      if (!data?.flower) {
+      if (!flower) {
         throw new Error("Flower Not Found :(\n Please Try again!!");
       }
 
       setStatus("Redirecting...");
 
       setTimeout(() => {
-        navigate(`/info/${encodeURIComponent(data.flower)}`);
+        navigate(`/info/${encodeURIComponent(flower)}`);
       }, 1500);
     }
 
@@ -118,8 +199,12 @@ function UploadPage() {
         onDragOver={handleDragOver}
       >
       {image ? (
-        <img src={image} alt="Preview" 
-        className={`uploaded-image ${status ? "blurred" : ""}`} />
+        <img 
+          src={image} 
+          alt="Preview" 
+          className={`uploaded-image ${status ? "blurred" : ""}`} 
+          ref={imgRef}
+        />
       
       ) : (
         <p>Drag & Drop Image Here</p>
