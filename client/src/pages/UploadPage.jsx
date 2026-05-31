@@ -66,14 +66,16 @@ function UploadPage() {
 
     try {
       setStatus("Searching Web...");
-      // const base64 = await toBase64(selectedFile);
+
       const formData = new FormData();
       formData.append("image", selectedFile);
+
 
       setTimeout(() => {
       setStatus("Consulting AI Model..."); 
     }, 800);
 
+      
       const response = await fetch("/api/predict-api", {
         method: "POST",
         body: formData
@@ -81,6 +83,7 @@ function UploadPage() {
       if (!response.ok) {
         throw new Error("Prediction Failed :(\n Please Try again!!");
       }
+
 
       const data = await response.json();
 
@@ -158,3 +161,11 @@ function UploadPage() {
   );
 }
 export default UploadPage;
+
+
+// To do :
+// Make text pretty again in info page 
+// Add confidence but make sure it's not in db
+// add notebook to repo 
+// readme and cv description 
+// How to run readme section

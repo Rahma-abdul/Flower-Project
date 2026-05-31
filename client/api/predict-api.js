@@ -1,4 +1,4 @@
-import * as ort from "onnxruntime-node";
+import * as ort from "onnxruntime-web";
 import fs from "fs";
 import formidable from "formidable";
 import sharp from "sharp";
@@ -38,7 +38,7 @@ async function preprocessImage(filePath) {
     const floatArray = new Float32Array(3*width*height);
 
     const mean = [0.485, 0.456, 0.406];
-  const std = [0.229, 0.224, 0.225];
+    const std = [0.229, 0.224, 0.225];
 
     for (let i = 0; i < width*height; i++) {
         for (let c = 0; c < 3; c++) {
@@ -81,15 +81,7 @@ export default async function handler(req, res) {
 
         const session = await loadModel();
 
-        // const {imageTensor} = req.body;
-
-        // const inputTensor = new ort.Tensor("float32", Float32Array.from(imageTensor.data), imageTensor.dims);
-
-        // const input = new ort.Tensor("float32", inputTensor, inputTensor.dims);
-
-        // console.log(session.inputNames);
-        // const outputs = await session.run({ x: tensor });
-
+        
         const inputName = session.inputNames[0];
         const outputs = await session.run({ [inputName]: tensor });
         
