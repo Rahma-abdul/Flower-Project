@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams , useSearchParams } from "react-router-dom";
 import "../styles/info.css";
 import { useEffect, useState } from "react";
 
@@ -7,6 +7,9 @@ function InfoPage() {
     const [flowerDetails, setflowerDetails] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    const [searchParams] = useSearchParams();
+    const confidence = searchParams.get("confidence");
 
 
     useEffect(() => {
@@ -60,6 +63,7 @@ function InfoPage() {
         <div className="info-page">
         {/* <h1 className="header-info" >Flower Information</h1> */}
         <h1 className="header-info">Showing details for {decodeURIComponent(name)} flower:</h1>
+        {confidence && <p className="confidence">Model Confidence: {confidence}%</p>}
         <div className="flower-details">
             {flowerDetails ? (
                 <div>

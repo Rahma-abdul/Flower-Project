@@ -180,13 +180,22 @@ function UploadPage() {
         throw new Error("Flower Not Found :(\n Please Try again!!");
       }
 
+      const logits = Array.from(outputData);
+      const expValues = logits.map(x => Math.exp(x - Math.max(...logits))); // subtract max for numerical stability
+      const sumExp = expValues.reduce((a, b) => a + b, 0);
+      const probabilities = expValues.map(x => x / sumExp);
+      const confidence = (Math.max(...Array.from(probabilities)) * 100).toFixed(2);
+
+
       setTimeout(() => {
       setStatus("Redirecting...");
       }, 1500);
 
 
       setTimeout(() => {
-        navigate(`/info/${encodeURIComponent(prettyFlower)}`);
+        // navigate(`/info/${encodeURIComponent(prettyFlower)}`);
+        navigate(`/info/${encodeURIComponent(prettyFlower)}?confidence=${confidence}`);
+
       }, 1500);
     }
 
@@ -249,10 +258,8 @@ function UploadPage() {
         onClick={handleSubmit}
         >Submit</button>
       )}
-
+      {status == "Loading Image..." && <div className = "ai_model">This might take a moment</div>}
       {status && <p className="status">{status}</p>}
-
-
     </div>
   );
 }
@@ -260,7 +267,6 @@ export default UploadPage;
 
 
 // To do :
-// Add confidence but make sure it's not in db
 // add notebook to repo 
 // readme and cv description 
 // How to run readme section
