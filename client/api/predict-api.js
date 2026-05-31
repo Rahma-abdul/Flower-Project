@@ -18,7 +18,7 @@ async function loadModel() {
   if (!session) {
     const modelPath = path.join(
        process.cwd(), 
-       "api",
+       "public",
       "upload-model",
       "flower_model_clean.onnx"
     );
@@ -36,7 +36,7 @@ const idx_to_flower = JSON.parse(
     fs.readFileSync(
         path.join(
             process.cwd(), 
-            "api",
+            "public",
             "upload-model",
             "idx_to_class.json"
         ),
