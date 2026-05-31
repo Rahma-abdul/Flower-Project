@@ -28,7 +28,6 @@ async function loadModel() {
   return session;
 }
 
-console.log(process.cwd());
 // idx_to_flower mapping
 // const idx_to_flower = JSON.parse(fs.readFileSync("./upload-model/idx_to_class.json", "utf-8"));
 const idx_to_flower = JSON.parse(
@@ -116,7 +115,7 @@ export default async function handler(req, res) {
 
         res.status(200).json({ flower });
     } catch (error) {
-        console.error("Error during prediction:", error);
+        console.error("Error during prediction:", error , "Current Dir:", process.cwd());
         res.status(500).json({ error: "Prediction Failed" });
     }   
 }
