@@ -2,7 +2,7 @@ import * as ort from "onnxruntime-web";
 import fs from "fs";
 import formidable from "formidable";
 import sharp from "sharp";
-// import path from "path";
+import path from "path";
 
 export const config = {
     api: {
@@ -17,14 +17,29 @@ let session = null;
 // Load the ONNX model when the server starts
 async function loadModel() {
   if (!session) {
-    session = await ort.InferenceSession.create("./upload-model/flower_model_clean.onnx");
+    const modelPath = path.join(
+      process.cwd(),
+      "upload-model",
+      "flower_model_clean.onnx"
+    );
+    session = await ort.InferenceSession.create(modelPath);
     console.log("ONNX model loaded successfully!");
   } 
   return session;
 }
 
 // idx_to_flower mapping
-const idx_to_flower = JSON.parse(fs.readFileSync("./upload-model/idx_to_class.json", "utf-8"));
+// const idx_to_flower = JSON.parse(fs.readFileSync("./upload-model/idx_to_class.json", "utf-8"));
+const idx_to_flower = JSON.parse(
+    fs.readFileSync(
+        path.join(
+            process.cwd(),
+            "upload-model",
+            "idx_to_class.json"
+        ),
+        "utf-8"
+    )
+);
 
 async function preprocessImage(filePath) {
     const {data: imageBuffer , info } = await sharp(filePath)
@@ -81,7 +96,7 @@ export default async function handler(req, res) {
 
         const session = await loadModel();
 
-        
+
         const inputName = session.inputNames[0];
         const outputs = await session.run({ [inputName]: tensor });
         
