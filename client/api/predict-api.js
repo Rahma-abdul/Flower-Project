@@ -13,17 +13,17 @@ export const config = {
 // Will hold the ONNX InferenceSession instance
 let session = null; 
 
-
 // Load the ONNX model when the server starts
 async function loadModel() {
   if (!session) {
     const modelPath = path.join(
-      process.cwd(),
+       process.cwd(), 
       "upload-model",
       "flower_model_clean.onnx"
     );
     session = await ort.InferenceSession.create(modelPath);
     console.log("ONNX model loaded successfully!");
+    console.log(process.cwd());
   } 
   return session;
 }
@@ -33,7 +33,7 @@ async function loadModel() {
 const idx_to_flower = JSON.parse(
     fs.readFileSync(
         path.join(
-            process.cwd(),
+            process.cwd(), 
             "upload-model",
             "idx_to_class.json"
         ),
