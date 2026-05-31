@@ -9,11 +9,13 @@ function UploadPage() {
   const [status, setStatus] = useState("");
   // const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
 
   // For uploading files
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
+      setSelectedFile(file);
       setImage(URL.createObjectURL(file));
       // setStatus("File selected: " + file.name);
       setStatus("");
@@ -25,6 +27,7 @@ function UploadPage() {
     event.preventDefault();
     const file = event.dataTransfer.files[0];
     if (file) {
+      setSelectedFile(file);
       setImage(URL.createObjectURL(file));
       // setStatus("File selected: " + file.name);
       setStatus("");
@@ -36,29 +39,66 @@ function UploadPage() {
     event.preventDefault();
   };
 
-  const handleSubmit = () => {
-    if (!image) {
+  const handleSubmit = async() => {
+    if(!selectedFile) {
+    // if (!image) {
       setStatus("Please select a file first!!");
       setTimeout(() => {
         setStatus("");
       }, 1000);
       return;
     }
-    setStatus("Searching Web...");
+    // setStatus("Searching Web...");
+    // remove all timeouts after this
 
-    setTimeout(() => {
+    // setTimeout(() => {
+      // setStatus("Consulting AI Model..."); 
+    // }, 2000);
+    
+    // setTimeout(() => {
+    //   setStatus("Redirecting..."); 
+    // }, 4000);
+
+    // setTimeout(() => {
+    //   const flower = "Rose";
+    //   navigate(`/info/${encodeURIComponent(flower) }`);
+    // }, 5000);
+
+    try {
+      setStatus("Searching Web...");
+      // const base64 = await toBase64(selectedFile);
+      const formData = new FormData();
+      formData.append("image", selectedFile);
+
+      setTimeout(() => {
       setStatus("Consulting AI Model..."); 
-    }, 2000);
+    }, 800);
 
-    setTimeout(() => {
-      setStatus("Redirecting..."); 
-    }, 4000);
+      const response = await fetch("/api/predict-api", {
+        method: "POST",
+        body: formData
+      });
+      if (!response.ok) {
+        throw new Error("Prediction Failed :(\n Please Try again!!");
+      }
 
-    setTimeout(() => {
-      const flower = "Rose";
-      navigate(`/info/${encodeURIComponent(flower) }`);
-    }, 5000);
+      const data = await response.json();
 
+      if (!data?.flower) {
+        throw new Error("Flower Not Found :(\n Please Try again!!");
+      }
+
+      setStatus("Redirecting...");
+
+      setTimeout(() => {
+        navigate(`/info/${encodeURIComponent(data.flower)}`);
+      }, 1500);
+    }
+
+    catch (error) {
+      console.error("Error Predicting Flower:", error);
+      setStatus(error.message || "An error occurred!");
+    }
   };
 
 
