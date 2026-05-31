@@ -18,7 +18,6 @@ async function loadModel() {
   if (!session) {
     const modelPath = path.join(
        process.cwd(), 
-       "client",
       "upload-model",
       "flower_model_clean.onnx"
     );
@@ -29,13 +28,13 @@ async function loadModel() {
   return session;
 }
 
+console.log("Current working directory:", process.cwd());
 // idx_to_flower mapping
 // const idx_to_flower = JSON.parse(fs.readFileSync("./upload-model/idx_to_class.json", "utf-8"));
 const idx_to_flower = JSON.parse(
     fs.readFileSync(
         path.join(
             process.cwd(), 
-            "client",
             "upload-model",
             "idx_to_class.json"
         ),
