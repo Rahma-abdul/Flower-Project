@@ -18,12 +18,13 @@ let session = null;
 async function loadModel() {
   if (!session) {
     
-    const modelPath = path.join(
-        process.cwd(), 
-        "public",
-        "models",
-        "flower_model_clean.onnx"
-    );
+    // const modelPath = path.join(
+    //     process.cwd(), 
+    //     "public",
+    //     "models",
+    //     "flower_model_clean.onnx"
+    // );
+    const modelPath =  "https://flower-project-kappa.vercel.app/models/flower_model_clean.onnx";
     session = await ort.InferenceSession.create(modelPath);
     console.log("ONNX model loaded successfully!");
     
@@ -34,17 +35,18 @@ async function loadModel() {
 console.log("Current working directory:", process.cwd());
 // idx_to_flower mapping
 // const idx_to_flower = JSON.parse(fs.readFileSync("./upload-model/idx_to_class.json", "utf-8"));
-const idx_to_flower = JSON.parse(
-    fs.readFileSync(
-        path.join(
-            process.cwd(), 
-            "public",
-            "models",
-            "idx_to_class.json"
-        ),
-        "utf-8"
-    )
-);
+// const idx_to_flower = JSON.parse(
+//     fs.readFileSync(
+//         path.join(
+//             process.cwd(), 
+//             "public",
+//             "models",
+//             "idx_to_class.json"
+//         ),
+//         "utf-8"
+//     )
+// );
+const idx_to_flower = await fetch( "https://flower-project-kappa.vercel.app/models/idx_to_class.json").then(r => r.json());
 
 async function preprocessImage(filePath) {
     const {data: imageBuffer , info } = await sharp(filePath)
