@@ -3,20 +3,25 @@ import { useState  , useRef , useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import * as ort from "onnxruntime-web";
 
-// Pin to stable version
+// Pin ONNX to stable version
 const ORT_VERSION = "1.26.0"; 
 
+// Load ONNX Runtime Web from CDN
 ort.env.wasm.wasmPaths =  `https://cdn.jsdelivr.net/npm/onnxruntime-web@${ORT_VERSION}/dist/`;
 
+// Cache model so it loads only once
 let cachedSession = null;
 let cachedIdxToFlower = null;
 
 async function loadModel() {
+
+  // If session already loaded --> return it
   if (!cachedSession) {
     const modelUrl = "https://flower-project-kappa.vercel.app/models/flower_model_clean.onnx";
     const response = await fetch(modelUrl, { cache: "no-store" });
     const modelBuffer = await response.arrayBuffer();
 
+    // Create ONNX inference session
     cachedSession = await ort.InferenceSession.create(modelBuffer, {
       executionProviders: ['wasm'], // Use WebAssembly backend for better performance
     });
@@ -35,27 +40,35 @@ async function loadIdxToFlower() {
 }
 
 async function preprocessImage(img) {
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = 224;
-    canvas.height = 224;
-    ctx.drawImage(img, 0, 0, 224, 224);
+  
+  // Create hidden canvas to process image
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
 
-    const imageData = ctx.getImageData(0, 0, 224, 224);
-    const data = imageData.data;
+  // Resize image to 224x224 aka model input size
+  canvas.width = 224;
+  canvas.height = 224;
+  ctx.drawImage(img, 0, 0, 224, 224);
 
-    const floatArray = new Float32Array(3 * 224 * 224);
-    const mean = [0.485, 0.456, 0.406];
-    const std = [0.229, 0.224, 0.225];
+  const imageData = ctx.getImageData(0, 0, 224, 224);
+  const data = imageData.data;
 
-    for (let i = 0; i < 224 * 224; i++) {
-    for (let c = 0; c < 3; c++) {
-      const pixel = data[i * 4 + c] / 255.0;
-      floatArray[c * 224 * 224 + i] = (pixel - mean[c]) / std[c];
-    }
+  // Create tensor array expected by model 
+  const floatArray = new Float32Array(3 * 224 * 224);
+
+  // Same normalization as used during training
+  const mean = [0.485, 0.456, 0.406];
+  const std = [0.229, 0.224, 0.225];
+
+  // Convert pixels to tensor values
+  for (let i = 0; i < 224 * 224; i++) {
+  for (let c = 0; c < 3; c++) {
+    const pixel = data[i * 4 + c] / 255.0;
+    floatArray[c * 224 * 224 + i] = (pixel - mean[c]) / std[c];
   }
-
-    return new ort.Tensor('float32', floatArray, [1, 3, 224, 224]);
+}
+  // Return tensor in shape [batch, channels, height, width]
+  return new ort.Tensor('float32', floatArray, [1, 3, 224, 224]);
 }
 
 function UploadPage() {
@@ -67,6 +80,7 @@ function UploadPage() {
   const [selectedFile, setSelectedFile] = useState(null);
   const imgRef = useRef(null);
 
+  // Preload model when page loads
   useEffect(() => {
     loadModel();
     loadIdxToFlower();
@@ -78,6 +92,8 @@ function UploadPage() {
     const file = event.target.files[0];
     if (file) {
       setSelectedFile(file);
+
+      // Create preview URL for the selected image
       setImage(URL.createObjectURL(file));
       // setStatus("File selected: " + file.name);
       setStatus("");
@@ -103,107 +119,80 @@ function UploadPage() {
 
   const handleSubmit = async() => {
     if(!selectedFile) {
-    // if (!image) {
       setStatus("Please select a file first!!");
       setTimeout(() => {
         setStatus("");
       }, 1000);
       return;
     }
-    // setStatus("Searching Web...");
-    // remove all timeouts after this
-
-    // setTimeout(() => {
-      // setStatus("Consulting AI Model..."); 
-    // }, 2000);
-    
-    // setTimeout(() => {
-    //   setStatus("Redirecting..."); 
-    // }, 4000);
-
-    // setTimeout(() => {
-    //   const flower = "Rose";
-    //   navigate(`/info/${encodeURIComponent(flower) }`);
-    // }, 5000);
 
     try {
 
-      setStatus("Loading Image...");
+    setStatus("Loading Image...");
 
-      // const formData = new FormData();
-      // formData.append("image", selectedFile);
-      const [session, idx_to_flower] = await Promise.all([loadModel(), loadIdxToFlower()]);
-
-
-      setStatus("Consulting AI Model..."); 
-      
-      // const response = await fetch("/api/predict-api", {
-      //   method: "POST",
-      //   body: formData
-      // });
-      // if (!response.ok) {
-      //   throw new Error("Prediction Failed :(\n Please Try again!!");
-      // }
+    // Load model and mapping 
+    const [session, idx_to_flower] = await Promise.all([loadModel(), loadIdxToFlower()]);
 
 
-      // const data = await response.json();
+    setStatus("Consulting AI Model..."); 
+    
 
-      // if (!data?.flower) {
-      //   throw new Error("Flower Not Found :(\n Please Try again!!");
-      // }
-
-      // Wait for the <img> element to be fully painted before reading pixels
-      const imageElement = imgRef.current;
-      if (!imageElement.complete) {
-        await new Promise((resolve) => {
-          imageElement.onload = resolve;
-        });
-      }
-
-      const tensor = await preprocessImage(imageElement);
-      const inputName = session.inputNames[0];
-      const outputs = await session.run({ [inputName]: tensor });
-      
-      const outputKey = session.outputNames[0];
-      const outputTensor = outputs[outputKey];
-      const outputData = outputTensor.data;
-      
-      const prediction = Array.from(outputData).indexOf(Math.max(...outputData));
-      const flower = idx_to_flower[prediction];
-
-      // Make Name Pretty
-      // Ex: bee_balm --> Bee Balm
-      const flower2 = flower.trim();
-      const prettyFlower = flower2.split("_").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
-
-      if (!flower) {
-        throw new Error("Flower Not Found :(\n Please Try again!!");
-      }
-
-      const logits = Array.from(outputData);
-      const expValues = logits.map(x => Math.exp(x - Math.max(...logits))); // subtract max for numerical stability
-      const sumExp = expValues.reduce((a, b) => a + b, 0);
-      const probabilities = expValues.map(x => x / sumExp);
-      const confidence = (Math.max(...Array.from(probabilities)) * 100).toFixed(2);
-
-
-      setTimeout(() => {
-      setStatus("Redirecting...");
-      }, 1500);
-
-
-      setTimeout(() => {
-        // navigate(`/info/${encodeURIComponent(prettyFlower)}`);
-        navigate(`/info/${encodeURIComponent(prettyFlower)}?confidence=${confidence}`);
-
-      }, 1500);
+    // Wait for the <img> element to be fully painted before reading pixels
+    const imageElement = imgRef.current;
+    if (!imageElement.complete) {
+      await new Promise((resolve) => {
+        imageElement.onload = resolve;
+      });
     }
 
-    catch (error) {
-      console.error("Error Predicting Flower:", error);
-      setStatus(error.message || "An error occurred!");
+    // Convert image to tensor 
+    const tensor = await preprocessImage(imageElement);
+    const inputName = session.inputNames[0];
+    // Run inference
+    const outputs = await session.run({ [inputName]: tensor });
+    
+    const outputKey = session.outputNames[0];
+    const outputTensor = outputs[outputKey];
+    const outputData = outputTensor.data;
+    
+    // Get class with highest probability
+    const prediction = Array.from(outputData).indexOf(Math.max(...outputData));
+    const flower = idx_to_flower[prediction];
+
+    // Make Name Pretty
+    // Ex: bee_balm --> Bee Balm
+    const flower2 = flower.trim();
+    const prettyFlower = flower2.split("_").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
+
+    if (!flower) {
+      throw new Error("Flower Not Found :(\n Please Try again!!");
     }
-  };
+
+    // Convery logits to probabilities
+    const logits = Array.from(outputData);
+    const expValues = logits.map(x => Math.exp(x - Math.max(...logits))); // subtract max for numerical stability
+    const sumExp = expValues.reduce((a, b) => a + b, 0);
+    const probabilities = expValues.map(x => x / sumExp);
+    const confidence = (Math.max(...Array.from(probabilities)) * 100).toFixed(2);
+
+
+    setTimeout(() => {
+    setStatus("Redirecting...");
+    }, 1500);
+
+
+    setTimeout(() => {
+      // navigate(`/info/${encodeURIComponent(prettyFlower)}`);
+      navigate(`/info/${encodeURIComponent(prettyFlower)}?confidence=${confidence}`);
+
+    }, 1500);
+  }
+
+  catch (error) {
+    console.error("Error Predicting Flower:", error);
+    setStatus(error.message || "An error occurred!");
+  }
+};
 
 
   const navigate = useNavigate();
@@ -264,9 +253,3 @@ function UploadPage() {
   );
 }
 export default UploadPage;
-
-
-// To do :
-// add notebook to repo 
-// readme and cv description 
-// How to run readme section

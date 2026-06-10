@@ -6,21 +6,7 @@ import { useState, useEffect } from "react";
 
 function MainPage() {
 
-    // b3d keda hyb2a bygy mn el backend
-    // const flowers = [
-    //     { name: "Rose", image: rose },
-    //     { name: "Tulip", image: tulip },
-    //     { name: "Daisy", image: daisy },
-    //     { name: "Sunflower", image: sunflower },
-    //     { name: "Orchid", image: orchid },
-    //     { name: "Lily", image: lily },
-    //     { name: "Carnation", image: carnation },
-    //     { name: "Chrysanthemum", image: chrysanthemum },
-    //     { name: "Marigold", image: marigold },
-    //     { name: "Peony", image: peony },
-    //     { name: "Hydrangea", image: hydrangea },
-    //     { name: "Lavender", image: lavender },
-    // ];
+  // Store flowers data from DB API
   const [flowers, setFlowers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -28,7 +14,9 @@ function MainPage() {
   useEffect(() => { 
     const fetchFlowers = async () => {
       try {
+        // Calling API --> Sends HTTP request
         const response = await fetch('/api/main-api');
+        // Get flowers from backend and convert to JSON
         const data = await response.json();
         setFlowers(data);
       } catch (error) {
@@ -42,6 +30,7 @@ function MainPage() {
     fetchFlowers();
   }, []); 
 
+  // Search function to call API 
   const handleSearch = async () => {
     const  query = searchTerm.trim();
     if (!query) {
@@ -52,6 +41,7 @@ function MainPage() {
       setLoading(true);
       const response = await fetch(`/api/main-api?search=${encodeURIComponent(query)}`);
       const data = await response.json();
+
       // If no results found 
       if (data.length === 0) {
         alert("No flowers found matching your search.");
@@ -77,6 +67,7 @@ function MainPage() {
     }
   }
 
+  // Example: RED_ROSE --> Red Rose
   const formatFlowerName = (name) => {
   if (!name) return "";
 
@@ -124,13 +115,7 @@ if (loading) {
           onChange={(e) => setSearchTerm(e.target.value)}
           onKeyDown={handleEnter}
         />
-        {/* <select className="filter-bar">
-          <option value="" disabled hidden>Filter by...</option>
-          <option value="color">Color</option>
-          <option value="location">Location</option>
-          <option value="climate">Climate</option>
-        </select>
-         */}
+    
         <button className='search-button' onClick={handleSearch}>
           Search
         </button>

@@ -70,7 +70,3 @@ export default async function handler(req, res) {
 
     
 }
-
-
-
-// To Do: Make sure to validate answers before sending API

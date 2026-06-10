@@ -140,23 +140,6 @@ export default async function handler(req, res) {
         }
         }
 
-        // else{
-        //     // if not in db 
-        //     // search wikipedia 
-        //     try{
-                
-        //         const wikiResponse = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(decodeURIComponent(name))}flower`);
-        //         console.log("Wikipedia API response status:", wikiResponse.status);
-        //         console.log("URL searching for is: ", `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(decodeURIComponent(name))}flower`);
-        //         if (wikiResponse.ok) {
-        //             const wikiData = await wikiResponse.json();
-        //             imageUrl = wikiData?.thumbnail?.source || null;
-        //         }
-        //     }
-        //     catch(error){
-        //         console.error("Error fetching image from Wikipedia:", error);
-        //     }
-        // }
         // Step 6: Return the JSON response
         // res.status(200).json(flowers);
         res.status(200).json({ ...flowers, Image: imageUrl });

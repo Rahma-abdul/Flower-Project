@@ -2,10 +2,6 @@ import { supabase } from './supabaseClient.js';
 
 export default async function handler(req, res) {
   
-    // try{ const { data, error } = await supabase
-//   from table name select all columns 
-    // .from('Flowers')
-    // .select('*');
 
     // Get the search query from the request
     const { search } = req.query; 

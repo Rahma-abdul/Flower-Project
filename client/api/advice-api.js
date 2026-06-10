@@ -1,6 +1,6 @@
 // When to return can't help
-// Not abt flower
-// Doesn't explicitly mention a name of a flower 
+    // 1) Not abt flower
+    // 2) Doesn't explicitly mention a name of a flower 
 
 // This file defines a serverless HTTP endpoint for advice page.
 

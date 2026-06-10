@@ -3,11 +3,14 @@ import "../styles/info.css";
 import { useEffect, useState } from "react";
 
 function InfoPage() {
+
+    // useParams --> hook to get flower name from URL
     const { name } = useParams();
     const [flowerDetails, setflowerDetails] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    // useSearchParams --> hook to get confidence score from URL parameters
     const [searchParams] = useSearchParams();
     const confidence = searchParams.get("confidence");
 
@@ -33,6 +36,8 @@ function InfoPage() {
                 // Data = {Image: '/assets/rose.jpg', Colors: 'Red', Origin: 'Asia, Europe, North America'....} --> Objects
                
                 setflowerDetails(data);
+                console.log("Flower data:", data);
+                console.log("Image URL:", data.Image);
 
                 }
             catch(error){
@@ -61,7 +66,6 @@ function InfoPage() {
 
     return (
         <div className="info-page">
-        {/* <h1 className="header-info" >Flower Information</h1> */}
         <h1 className="header-info">Showing details for {decodeURIComponent(name)} flower:</h1>
         {confidence && <p className="confidence">Model Confidence: {confidence}%</p>}
         <div className="flower-details">

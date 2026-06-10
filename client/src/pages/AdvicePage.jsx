@@ -9,28 +9,24 @@ function AdvicePage() {
   const [ messages, setMessages ] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const chatContainerRef = useRef(null);
+  // useRef --> hook that allows you to create a mutable reference that persists across re-renders
+  // Aka For Auto Scrolling
 
 
   const handleSend = async() => {
     // Prevent sending empty messages
     if (!advice.trim()) return;
 
+    // Add user msg to chat
     setMessages((prev) => [...prev, { sender: "user", text: advice }]);
     setAdvice("");
 
-    // setTimeout(() => {
-    //   setMessages((prev) => [
-    //     ...prev,
-    //     { sender: "ai", text: "Hello!! AI speaking, We're still working on the responses" },
-    //   ]);
-    // }, 1000);
-
+    // AI loading answer --> Typing 
     setMessages((prev) => [...prev, { sender: "ai", text: "Typing..." }]);
     
     setIsLoading(true);
     // Call the advice API
     try{
-      // Understand fetch API
       // Method POST --> Used to send data to server
       // Headers --> Content type JSON
       // Body --> question
@@ -47,6 +43,7 @@ function AdvicePage() {
 
     // Remove the "Typing..." message
     setMessages((prev) => prev.filter((msg) => msg.text !== "Typing..."));
+    // Add AI response to chat
     setMessages((prev) => [...prev, { sender: "ai", text: data.response }]);
 
     setIsLoading(false);
@@ -110,8 +107,3 @@ function AdvicePage() {
   );
 }
 export default AdvicePage;
-
-// To Do:
-// Animation of typing
-
-

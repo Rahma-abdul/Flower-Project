@@ -17,6 +17,7 @@
     /* max-width: 600px; */
     margin: 0 50px;
     align-items: center;
+
 }
 
 .question{
@@ -92,4 +93,18 @@
     font-weight: bold;
     text-align: center;
     width: 300px;
+}
+
+
+@media (max-width: 500px) {
+    .quiz-container {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+}
+
+.multi-note{
+    font-size: 0.8em;
+    color: #792750;
+    font-style: italic;
 }

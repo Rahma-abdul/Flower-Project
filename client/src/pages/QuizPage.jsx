@@ -4,6 +4,7 @@ import '../styles/advice.css';
 import '../styles/quiz.css';
 
 function QuizPage() {
+  // Store user answers
   const [ answers, setAnswers ] = useState({});
   const [status , setStatus] = useState("");
 
@@ -33,6 +34,8 @@ function QuizPage() {
 
   // So that when status changes the view scrolls down to show it automatically
   const statusRef = useRef(null);
+
+
   useEffect(() => {
     if (status === "Please answer all questions before submitting!!" && statusRef.current) {
       statusRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -51,6 +54,7 @@ function QuizPage() {
       return;
     }
     else{
+      // Check if any written answer is too short or doesn't contain letters
       for (const q of written_questions) {
       const answer = answers[q.id].trim().toLowerCase();
       console.log("Answer:", answer);
@@ -76,6 +80,7 @@ function QuizPage() {
 
     // Call Quiz API 
     try {
+      // Send answer to backend API
       const response = await fetch('/api/quiz-api', {
         method: 'POST',
         headers: {
@@ -98,14 +103,6 @@ function QuizPage() {
     } catch (error) {
       console.error("Error calling Quiz API:", error);
     }
-
-    // setTimeout(() => {
-    //   setStatus("Redirecting..."); 
-    // }, 4000);
-
-    // setTimeout(() => {
-    //   navigate(`/info/${encodeURIComponent(flower) }`);
-    // }, 5000);
 
   }
 
@@ -132,6 +129,8 @@ function QuizPage() {
         {mcq_questions.map((q) => (
           <div key={q.id} className="item">
             <label>{q.question}</label>
+            {/* If multi */}
+            {q.multi ? <div className="multi-note"> (You can select multiple options) </div> : null}
             <div className="options">
             {q.options.map((option) => (
               <div key={option} className="option-item">
