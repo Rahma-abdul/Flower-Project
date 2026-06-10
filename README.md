@@ -320,6 +320,31 @@ https://flower-project-kappa.vercel.app/
 
 ### I) Screenshots 
 
+* Main Page: 
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/da32b98b-ae8d-4564-8571-01e882613585" />
+
+* Info Page:
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/fa983f48-4024-4499-be91-3cd87412c7aa" />
+
+* Upload Page:
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/7419f3fe-d017-4b82-9013-49baf2b3bd4c" />
+
+After prediction: 
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/231b1def-417a-48f4-b0a9-3a99fc96b546" />
+
+* Advice Page:
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/c5c67a53-858f-41c4-a6d5-af64de8af1c6" />
+
+* Quiz Page:
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/21bfbef5-9def-4736-b67a-497c42028306" />
+
+
+
+
+
+
+
+
 
 ## 👤 Author
 
