@@ -321,31 +321,24 @@ https://flower-project-kappa.vercel.app/
 ### I) Screenshots 
 
 * Main Page: 
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/da32b98b-ae8d-4564-8571-01e882613585" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/72e99897-83a4-4808-a5f2-f97b6893f6dc" />
 
 * Info Page:
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/fa983f48-4024-4499-be91-3cd87412c7aa" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/643f49cf-bb31-4cf0-9c02-898b9ced17c3" />
 
 * Upload Page:
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/7419f3fe-d017-4b82-9013-49baf2b3bd4c" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/285834ef-da78-4390-9793-d77d0bb52705" />
 
 After prediction: 
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/231b1def-417a-48f4-b0a9-3a99fc96b546" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/44aa95dc-6179-43e5-9070-f2c71ef895d1" />
 
 * Advice Page:
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/c5c67a53-858f-41c4-a6d5-af64de8af1c6" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/57cb5421-108c-4f02-be21-a386140ddf93" />
 
 * Quiz Page:
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/21bfbef5-9def-4736-b67a-497c42028306" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/8efd2305-1256-4bc3-b684-e317816e2c65" />
 
-
-
-
-
-
-
-
-
+---
 ## 👤 Author
 
 Developed by Rahma Rizk.
